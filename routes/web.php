@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('auth', [AuthController::class, 'create'])->middleware('guest');
+
+
+Route::get('/logout', [LogoutController::class, 'store'])->middleware('auth')->name('logout');
+Route::post('/logout', [LogoutController::class, 'store'])->middleware('auth');
