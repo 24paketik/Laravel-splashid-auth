@@ -11,11 +11,15 @@ class AuthController extends Controller
 {
     public function create(Request $request){
         $request->validate([
-            'token' => 'required|string',
+            'code' => 'required|string',
         ]);
-        $userToken = $request->input('token');
-        $applicationToken = 'NP7YODEYB8AWhEwzJuyRdEWA1y4AgSLAiqCeFbbu';
-        $applicationSecret = 'GQ8AkwkP0NiJDlT9MgBwvc2eCa9QROnL9oTJET1r';
+        $code = $request->input('code');
+        $applicationToken = 'YOUR_APPLICATION_TOKEN_HERE';
+        $applicationSecret = 'YOUR_APPLICATION_SECRET_HERE';
+        $response = Http::get('https://api.mcsplash.ru/api/users/token/'.$code.'/'.$applicationToken.'/'.$applicationSecret);
+        if ($response->successful()) {
+            $userToken = $response['token'];
+        }
         $response = Http::get('https://api.mcsplash.ru/api/users/'.$userToken.'/'.$applicationToken.'/'.$applicationSecret);
 
         if ($response->successful()) {
