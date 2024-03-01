@@ -20,7 +20,6 @@ class AuthController extends Controller
         if ($response->successful()) {
             $userToken = $response['token'];
         }
-        $response = Http::get('https://api.mcsplash.ru/api/users/'.$userToken.'/'.$applicationToken.'/'.$applicationSecret);
 
         if ($response->successful()) {
             $user = User::where('splashid', $userToken)->first();
